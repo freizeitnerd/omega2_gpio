@@ -53,8 +53,7 @@ class Omega2GpioTest < Minitest::Test
 
   def test_error_reporting_if_not_existing_gpio_initialized
     assert_raises StandardError do
-      gpio_number = Omega2Gpio.configuration.highest_gpio_number+1
-      Omega2Gpio::Output.new(gpio_number)
+      Omega2Gpio::Output.new(Omega2Gpio.configuration.highest_gpio_number+1)
     end
   end
 
