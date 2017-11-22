@@ -46,5 +46,13 @@ module Omega2Gpio
       read
     end
 
+    def is_high?
+      self.read == 1
+    end
+
+    def is_low?
+      self.read == 0
+    end
+
   end
 end
