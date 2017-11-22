@@ -1,6 +1,6 @@
-# Rubyish Omega2 GPIOs
+# Ruby Gem to control Omega2 GPIO
 
-A wrapper to control [Onion Omega2](https://onion.io/omega2/) GPIOs in ruby
+Control [Onion Omega2](https://onion.io/omega2/) GPIOs in ruby
 
 ## Installation
 
