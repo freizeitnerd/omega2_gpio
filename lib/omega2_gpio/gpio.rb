@@ -10,7 +10,7 @@ module Omega2Gpio
       if Omega2Gpio.configuration.mock and gpio_number.between?(0, Omega2Gpio.configuration.highest_gpio_number)
         Omega2Gpio.messenger.debug "Init Fake-GPIO#{@gpio_number} and mock all interactions as valid"
       else
-        set_mode('output')
+        set_direction('output')
       end
 
       self
@@ -20,11 +20,8 @@ module Omega2Gpio
       Omega2Gpio.configuration.mock
     end
 
-    def set_mode(direction)
-      stdin, stdout, stderr = Open3.popen3("fast-gpio set-#{direction} #{self.gpio_number}")
-      if stderr.gets
-        Omega2Gpio.raise_error(stderr.gets)
-      end
+    def set_direction(direction)
+      execute_fast_gpio_command "fast-gpio set-#{direction} #{self.gpio_number}"
     end
 
     def read
@@ -54,5 +51,13 @@ module Omega2Gpio
       self.read == 0
     end
 
+    private
+
+    def execute_fast_gpio_command(command)
+      stdin, stdout, stderr = Open3.popen3(command)
+      if stderr.gets
+        Omega2Gpio.raise_error(stderr.gets)
+      end
+    end
   end
 end

@@ -18,6 +18,24 @@ Or install it yourself as:
 
     $ gem install omega2_gpio
 
+
+## Get Started
+An Omega2 GPIO can be 
+  - an Input, 
+  - an Output or
+  - a PWM Output.
+### Input GPIO
+To use GPIO1 as an input, just instantiate an Omega2GPIO::Input using the `new`methode and pass in the number of the GPIO to use. (In this case 1 for GPIO1)
+This will set the GPIO orientation to 'output'.
+```ruby
+gpio_number = 1
+my_input_gpio = Omega2Gpio::Output.new(gpio_number)
+```
+Read the value of this GPIO as follows
+```ruby
+my_input_gpio_value = my_input_gpio.read
+```
+
 ## Usage
 
 TODO: Write usage instructions here

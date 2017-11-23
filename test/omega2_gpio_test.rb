@@ -22,7 +22,7 @@ class Omega2GpioTest < Minitest::Test
   end
 
   def test_read_output_gpio
-    assert Omega2Gpio::Output.new(1).read == 0
+    assert Omega2Gpio::Output.new(1).set(1).read == 1
   end
 
   def test_read_input_gpio
@@ -30,7 +30,7 @@ class Omega2GpioTest < Minitest::Test
   end
 
   def test_get_output_gpio
-    assert Omega2Gpio::Output.new(1).get == 0
+    assert Omega2Gpio::Output.new(1).set(1).get == 1
   end
 
   def test_if_output_is_high

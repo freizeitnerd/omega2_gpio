@@ -3,18 +3,13 @@ module Omega2Gpio
 
     def set(value)
       if Omega2Gpio.configuration.mock
-        @value = value
-        Omega2Gpio.messenger.debug "Mocked GPIO#{self.gpio_number} is set to '#{@value}'"
+        Omega2Gpio.messenger.debug "Mocked GPIO#{self.gpio_number} is set to '#{value}'"
       else
-        stdin, stdout, stderr = Open3.popen3("fast-gpio set #{self.gpio_number} #{value}")
-        if stderr.gets
-          raise_error(stderr.gets)
-        else
-          @value = value
-        end
+        execute_fast_gpio_command "fast-gpio set #{self.gpio_number} #{value}"
       end
+      @value = value
 
-      self.read == value
+      self
     end
 
   end
