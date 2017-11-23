@@ -1,3 +1,4 @@
+# coding: utf-8
 module Omega2Gpio
   class Output < Gpio
 

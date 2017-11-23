@@ -1,5 +1,5 @@
+# coding: utf-8
 module Omega2Gpio
-
   class FastGpioError < StandardError
   end
 
