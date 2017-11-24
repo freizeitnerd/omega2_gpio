@@ -1,6 +1,9 @@
 # coding: utf-8
 module Omega2Gpio
   class Output < Gpio
+    def initialize(gpio_number)
+      super(gpio_number, "output")
+    end
 
     def set(value)
       if Omega2Gpio.configuration.mock
@@ -11,6 +14,14 @@ module Omega2Gpio
       @value = value
 
       self
+    end
+
+    def high
+      set(1)
+    end
+
+    def low
+      set(0)
     end
 
   end
