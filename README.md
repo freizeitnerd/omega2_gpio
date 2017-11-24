@@ -21,9 +21,9 @@ Or install it yourself as:
 
 ## Get Started
 An Omega2 GPIO can be 
-  - an Input, 
+  - an Input
   - an Output or
-  - a PWM Output.
+  - a PWM-Output (not yet implemented in this Gem)
 ### Input GPIO
 To use GPIO1 as an input, just instantiate an Omega2GPIO::Input using the `new`methode and pass in the number of the GPIO to use. (In this case 1 for GPIO1)
 This will set the GPIO orientation to 'output'.
