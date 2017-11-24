@@ -10,10 +10,12 @@ module Omega2Gpio
       @value = 0
       @direction = direction
 
+      command = "fast-gpio set-#{direction} #{self.gpio_number}"
       if Omega2Gpio.configuration.mock && gpio_number.between?(0, Omega2Gpio.configuration.highest_gpio_number)
         Omega2Gpio.messenger.debug "Init Fake-GPIO#{@gpio_number} and mock all interactions as valid"
+        mock_fast_gpio_command command
       else
-        set_direction(direction)
+        execute_fast_gpio_command command
       end
 
       self
@@ -24,10 +26,11 @@ module Omega2Gpio
     end
 
     def read
+      command = "fast-gpio read #{@gpio_number}"
       if Omega2Gpio.configuration.mock
-        Omega2Gpio.messenger.debug "Mocked GPIO#{self.gpio_number} value is '#{@value}'"
+        mock_fast_gpio_command command
       else
-        stdout = execute_fast_gpio_command "fast-gpio read #{@gpio_number}"
+        stdout = execute_fast_gpio_command command
         @value = stdout.gets.to_s.split.last.to_i
       end
 
@@ -61,16 +64,13 @@ module Omega2Gpio
       if stderr.gets
         Omega2Gpio.raise_error(stderr.gets)
       end
-      Omega2Gpio.messenger.debug "Fast-Gpio command: #{command}"
+      Omega2Gpio.messenger.debug "System command: #{command}"
       Omega2Gpio.messenger.debug "  returns: #{stdout}"
       stdout
     end
 
-    # Direction should be set via initialize-method only
-    def set_direction(direction)
-      execute_fast_gpio_command "fast-gpio set-#{direction} #{self.gpio_number}"
+    def mock_fast_gpio_command(command)
+      Omega2Gpio.messenger.debug "Mock command: #{command}"
     end
-
-
   end
 end

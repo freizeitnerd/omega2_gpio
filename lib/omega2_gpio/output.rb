@@ -6,10 +6,11 @@ module Omega2Gpio
     end
 
     def set(value)
+      command = "fast-gpio set #{self.gpio_number} #{value}"
       if Omega2Gpio.configuration.mock
-        Omega2Gpio.messenger.debug "Mocked GPIO#{self.gpio_number} is set to '#{value}'"
+        mock_fast_gpio_command command
       else
-        execute_fast_gpio_command "fast-gpio set #{self.gpio_number} #{value}"
+        execute_fast_gpio_command command
       end
       @value = value
 
