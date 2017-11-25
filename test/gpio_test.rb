@@ -2,7 +2,7 @@
 require 'test_helper'
 require 'minitest/hooks'
 
-class Omega2GpioTest < Minitest::Test
+class GpioTest < Minitest::Test
   include Minitest::Hooks
 
   before(:all) do
