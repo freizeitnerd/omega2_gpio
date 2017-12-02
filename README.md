@@ -1,7 +1,15 @@
 # Ruby Gem to control Omega2 GPIO
 
-Control [Onion Omega2](https://onion.io/omega2/) GPIOs in ruby
-TODO: Discribe mocking
+Control [Onion Omega2](https://onion.io/omega2/) GPIOs using Ruby
+
+Instantiate Omega GPIO's as Objects in Ruby.
+Easily switch an output from 
+low to high or get its value. Inputs can be instantiated and read the same way.
+PWM in on the road map but not yet implemented.
+It is all based on Omegas's fast-gpio system commands. 
+
+**Switch the Gem to mock-mode to simulate the Omega.** This way you can develop and test your business logic 
+on your Laptop in your favorite Editor. Onion Omega doesn't need to be connected.
 
 ## Installation
 
@@ -34,14 +42,13 @@ opkg update
 opkg install ruby
 opkg install ruby-gems ruby-enc-extra ruby-openssl ca-certificates
 ```
-Install this Gem, still in Omega2's console:
+**Install this Gem**: (still in Omega2's console)
 ```
 gem install omega2_gpio
 ```
-If you want to play around in the Ruby Console (IRB), like in the GIF below
-install the IRB
+If you want to play around in Ruby Console (IRB), like in the GIF below
+install  IRB. (It is not generally needed to run the Gem)
 ```
-opkg update
 opkg install ruby-irb
 ```
 
@@ -62,7 +69,8 @@ require "omega2_gpio"
 ````
 This way you switch Omega's GPIO1 from low to high
 ````ruby
-my_gpio = Omega2Gpio::Output.new(1).low
+gpio_number = 1
+my_gpio = Omega2Gpio::Output.new(gpio_number).low
 my_gpio.high
 ````
 ![alt text](https://github.com/freizeitnerd/omega2_gpio_examples/blob/master/media/omega2_gpio_irb.gif?raw=true "IRB Example to play with Omega2 GPIO in Ruby")
@@ -83,31 +91,36 @@ my_input_gpio_value = my_input_gpio.read
 ```
 
 ## Configuration
-The Gem can be configured with following the ``Omega2Gpio.configuration`` Object
+The Gem can be configured setting the ``Omega2Gpio.configuration`` Object
+### Debug outputs
 ````ruby
 Omega2Gpio.configuration.messaging_level = 0 # silent: No messages to STDOUT (puts)
 Omega2Gpio.configuration.messaging_level = 1 # warn: puts only warnings
 Omega2Gpio.configuration.messaging_level = 2 # debug: puts hints and fast-gpio commands
+````
+### Mock
+````ruby
 
 Omega2Gpio.configuration.mock = true  # mocks all Omega2 depending commands as valid, like fast-gpio commands
 Omega2Gpio.configuration.mock = false # no mock
 ````
-
-Create a ``config.rb`` to your project to configure omega2_gpio like described above.
+### Best practise
+Create a ``config.rb`` in your project folder to configure omega2_gpio like described above.
 Add the file to your ``.gitignore`` file. This way you can have devise dependent configuration.
 - On your Omega2 set ``mock`` to ``false`` and ``messaging_level`` to ``0``
 - On your development computer  set ``mock`` to ``true`` and ``messaging_level`` to ``2`` to conveniently develop you business logic without touching Omega2 all the time.
 
 ## Versioning
-[Semantic Versioning](http://semver.org/) versioning is used. For the versions available, see the [tags on this repository](https://github.com/your/project/tags) or
+[Semantic Versioning](http://semver.org/) is used. For the versions available, see the [tags on this repository](https://github.com/your/project/tags) or
 [https://rubygems.org/gems/omega2_gpio](https://rubygems.org/gems/omega2_gpio).
 
 ## Contributing
-Bug reports and pull requests are welcome! Feel free to refactor! This is my first Gem, I'll be glad to learn!
+Bug reports and pull requests are welcome! 
 Please write tests! (see section testing)
+Feel free to refactor or send feedback by mail. I'll be glad to learn, improve the code and add features!
 
 ## Testing (TDD)
-Run ```Rake``` to run all save tests that don't touch your hardware. They are all mocked.
+Run ```Rake test``` to run all save tests that don't touch your hardware. They are all mocked.
 Tests that may damage hardware belong to files ending with ```_test_may_damage_hardware.rb``` in the ```test``` folder.
 Run tests that may damage hardware on Omega2 with ```rake damagingtest```.
 
